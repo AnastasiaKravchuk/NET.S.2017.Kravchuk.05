@@ -8,7 +8,7 @@ namespace Logic
 {
     public class Polynomial
     {
-        private double[] coeff { get; set; }
+        private double[] coeff;
 
         public Polynomial(){}
 
@@ -86,9 +86,11 @@ namespace Logic
             return new Polynomial(sum);
         }
 
-        public override bool Equals(Polynomial obj)
+        public bool Equals(Polynomial obj)
         {
-            for (int i = 0; i < obj.GetDegree(); )
+            Polynomial poly = obj as Polynomial;
+
+            for (int i = 0; i < obj.GetDegree(); i++)
             {
                 if (coeff[i] != obj.GetCoefficients()[i])
                 {
@@ -96,6 +98,16 @@ namespace Logic
                 }
             }
             return true;
+        }
+
+        public override int GetHashCode()
+        {
+            int hash = 17;
+            for (int i = 0; i < coeff.Length; i++)
+            {
+                hash = hash * 23 + coeff[i].GetHashCode();
+            }
+            return hash;
         }
     }
 }
